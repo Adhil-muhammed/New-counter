@@ -3,7 +3,7 @@ import { useImmer } from "use-immer";
 import Counter from "./Counter";
 import Counter2 from "./Counter2";
 
-export const Immer = () => {
+export const NewApp = () => {
   const [screen2, setscreen2] = useImmer(false);
   const [screen1, setScreen1] = useImmer(false);
   const [counter, setCounter] = useImmer({
