@@ -19,7 +19,8 @@ export const Immer = () => {
         draft.display2++;
         draft.display1++;
       } else if (screen1) {
-        setscreen2();
+        setscreen2(); 
+        // if  setscreen2 is comes to false then display 2 is trun of
         draft.display1++;
       }
     });
@@ -43,10 +44,10 @@ export const Immer = () => {
       }
     });
   };
-  const Selectall = () => {
-    setscreen2(true);
-    setScreen1(true);
-  };
+  // const Selectall = () => {
+  //   setscreen2(true);
+  //   setScreen1(true);
+  // };
 
   return (
     <React.Fragment>

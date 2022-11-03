@@ -6,7 +6,18 @@ function Counter2({ counter }) {
         className="display"
         style={{ display: "flex", justifyContent: "center" }}
       >
-      
+      <div
+            style={{
+              marginRight: "5rem",
+              width: "100px",
+              height: "100px",
+              backgroundColor: "black",
+              color: "white",
+              textAlign: "center",
+            }}
+          >
+         {counter.display2}
+          </div>
       </div>
     </h1>
   );
