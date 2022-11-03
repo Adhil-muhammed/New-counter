@@ -1,147 +1,130 @@
-import React, { useState } from "react";
+import React from "react";
 import { useImmer } from "use-immer";
+import Counter from "./Counter";
+import Counter2 from "./Counter2";
 
 export const Immer = () => {
-  const [isLoding, setisLoding] = useState(false);
-  const [isLoding2, setisLoding2] = useState(false);
+  const [screen2, setscreen2] = useImmer(false);
+  const [screen1, setScreen1] = useImmer(false);
   const [counter, setCounter] = useImmer({
-   
     display1: 0,
     display2: 0,
   });
-
+  console.log(screen2);
+  console.log(screen1);
 
   function add() {
     setCounter((draft) => {
-      if (isLoding2) {
-        draft.display1++;
-      }
-      if (isLoding) {
+      if (screen1 && screen2) {
         draft.display2++;
+        draft.display1++;
+      } else if (screen1) {
+        setscreen2();
+        draft.display1++;
       }
     });
   }
   const minus = () => {
     setCounter((draft) => {
-      if (isLoding2) {
+      if (screen2 && screen1) {
         draft.display1--;
-      }
-      if (isLoding) {
         draft.display2--;
+      } else if (screen1) {
+        setscreen2(false);
+        draft.display1--;
       }
     });
   };
   const Reset = () => {
     setCounter((draft) => {
-      if (isLoding2) {
+      if (screen1) {
         draft.display1 = 0;
-      }
-      if (isLoding) {
         draft.display2 = 0;
       }
     });
   };
   const Selectall = () => {
-    setisLoding(true);
+    setscreen2(true);
+    setScreen1(true);
   };
 
   return (
-    <div className="App">
-      <h1>
-        <div
-          className="display"
-          style={{ display: "flex", justifyContent: "center" }}
-        >
-          <div
-            style={{
-              marginRight: "5rem",
-              width: "100px",
-              height: "100px",
-              backgroundColor: "black",
-              color: "white",
-              textAlign: "center",
-            }}
-          >
-            {counter.display1}
-          </div>
-          <div
-            style={{
-              width: "100px",
-              height: "100px",
-              backgroundColor: "black",
-              color: "white",
-              textAlign: "center",
-            }}
-          >
-            {counter.display2}
-          </div>
-        </div>
-      </h1>
+    <React.Fragment>
+      <div className="App">
+        <Counter counter={counter} />
+        <Counter2 counter={counter} />
 
-      <br />
-      <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-        <button
-          onClick={add}
-          style={{
-            width: "80px",
-            height: "30px",
-            backgroundColor: "green",
-            color: "white",
-            textAlign: "center",
-            borderRadius: "15px",
+        <br />
+        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <button
+            onClick={add}
+            style={{
+              width: "80px",
+              height: "30px",
+              backgroundColor: "green",
+              color: "white",
+              textAlign: "center",
+              borderRadius: "15px",
+            }}
+          >
+            add
+          </button>
+          <button
+            onClick={minus}
+            style={{
+              width: "80px",
+              height: "30px",
+              backgroundColor: "red",
+              color: "white",
+              textAlign: "center",
+              borderRadius: "15px",
+            }}
+          >
+            minus
+          </button>
+          <button
+            onClick={Reset}
+            style={{
+              width: "80px",
+              height: "30px",
+              backgroundColor: "black",
+              color: "white",
+              textAlign: "center",
+              borderRadius: "15px",
+            }}
+          >
+            Reset
+          </button>
+        </div>
+        <div className="btn">
+        <label htmlFor="">select all</label>
+          <input type="checkbox"
+          //  onChange={Selectall}
+          onChange={() => {
+            setscreen2((draft) => {
+              draft = !draft;
+              return draft;
+            });
+            setScreen1((draft) => {
+              draft = !draft;
+              return draft;
+            });
+
           }}
-        >
-          add 
-        </button>
-        <button
-          onClick={minus}
-          style={{
-            width: "80px",
-            height: "30px",
-            backgroundColor: "red",
-            color: "white",
-            textAlign: "center",
-            borderRadius: "15px",
-          }}
-        >
-          minus
-        </button>
-        <button
-          onClick={Reset}
-          style={{
-            width: "80px",
-            height: "30px",
-            backgroundColor: "black",
-            color: "white",
-            textAlign: "center",
-            borderRadius: "15px",
-          }}
-        >
-          Reset
-        </button>
+            />
+
+          <label htmlFor="">select Display1</label>
+          <input
+            type="checkbox"
+            onChange={() => {
+              setscreen2((draft) => {
+                draft = !draft;
+                return draft;
+              });
+            }}
+          />
+        </div>
       </div>
-      <div className="btn">
-        <button
-          onClick={Selectall}
-          onDoubleClick={() => {
-            setisLoding(false);
-          }}
-        >
-          Select All Display
-        </button>
-        <button
-          onClick={() => {
-            setisLoding2(true);
-          }}
-          onDoubleClick={() => {
-            setisLoding2(false);
-          }}
-        >
-          First Counter Display
-        </button>
-        <label htmlFor="">Click the 'Select All' button</label>
-        <input type="checkbox" checked={isLoding} />
-      </div>
-    </div>
+    </React.Fragment>
   );
 };
